@@ -5,24 +5,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.honghei.gank.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    tools:context="com.honghei.gank.ui.activity.MainActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                />
 
-    <include layout="@layout/content_main"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <com.ogaclejapan.smarttablayout.SmartTabLayout
+                    android:id="@+id/viewpagertab"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    app:stl_indicatorAlwaysInCenter="false"
+                    app:stl_indicatorWithoutPadding="false"
+                    app:stl_indicatorInFront="true"
+                    app:stl_indicatorInterpolation="smart"
+                    app:stl_indicatorGravity="bottom"
+                    app:stl_indicatorColor="#ffffff"
+                    app:stl_indicatorThickness="3dp"
+                    app:stl_indicatorWidth="auto"
+                    app:stl_indicatorCornerRadius="2dp"
+                    app:stl_overlineColor="#4D000000"
+                    app:stl_overlineThickness="0dp"
+                    app:stl_underlineColor="#4D000000"
+                    app:stl_underlineThickness="1dp"
+                    app:stl_dividerColor="#4D000000"
+                    app:stl_dividerThickness="1dp"
+                    app:stl_defaultTabBackground="?attr/colorPrimary"
+                    app:stl_defaultTabTextAllCaps="true"
+                    app:stl_defaultTabTextColor="#fcffffff"
+                    app:stl_defaultTabTextSize="14sp"
+                    app:stl_defaultTabTextHorizontalPadding="16dp"
+                    app:stl_defaultTabTextMinWidth="0dp"
+                    app:stl_distributeEvenly="true"
+                    app:stl_clickable="true"
+                    app:stl_titleOffset="24dp"
+                    app:stl_drawDecorationAfterTab="true"
+                    />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -30,6 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_dialog_email"/>
 
 </android.support.design.widget.CoordinatorLayout>
