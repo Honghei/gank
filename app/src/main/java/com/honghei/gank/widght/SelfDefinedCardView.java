@@ -1,22 +1,21 @@
 package com.honghei.gank.widght;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
  * @author Honghei
- * @time 2017/3/16  17:17
+ * @time 2017/3/18  15:10
  * @desc ${TODD}
  */
-public class SelfDefinedRecyclerView extends RecyclerView {
-    public SelfDefinedRecyclerView(Context context) {
+public class SelfDefinedCardView extends CardView {
+    public SelfDefinedCardView(Context context) {
         super(context);
     }
 
-    public SelfDefinedRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public SelfDefinedCardView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -44,9 +43,9 @@ public class SelfDefinedRecyclerView extends RecyclerView {
                     getParent().requestDisallowInterceptTouchEvent(true);
 
                 break;
-                case MotionEvent.ACTION_UP:
-                    break;
-            }
+            case MotionEvent.ACTION_UP:
+                break;
+        }
         return super.onTouchEvent(e);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
  * @time 2017/3/14  13:59
  * @desc ${TODD}
  */
-public class ZhihuNewsItem {
+public class ZhihuNewsLatest {
 
     /**
      * date : 20170314

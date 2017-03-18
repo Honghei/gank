@@ -5,7 +5,7 @@ import android.content.Context;
 import com.honghei.gank.api.ApiFactory;
 import com.honghei.gank.base.BasePresenter;
 import com.honghei.gank.base.ZhihuNewsItemBaseView;
-import com.honghei.gank.bean.zhihunews.ZhihuNewsItem;
+import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
 import com.honghei.gank.ui.fragment.ZhihuNewsItemItemFragment;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
 public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseView> {
     private Context mContext;
     private ZhihuNewsItemBaseView view;
-    private ZhihuNewsItem mZhihuNewsItem;
+    private ZhihuNewsLatest mZhihuNewsLatest;
 
     public ZhihuNewsItemPresenter(ZhihuNewsItemBaseView view, Context context){
         this.view = view;
@@ -36,13 +36,13 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
         ApiFactory.getZhihuApiSingleton().getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuNewsItem>() {
+                .subscribe(new Action1<ZhihuNewsLatest>() {
                     @Override
-                    public void call(ZhihuNewsItem zhihuNewsItem) {
+                    public void call(ZhihuNewsLatest zhihuNewsLatest) {
 
                         if(view instanceof ZhihuNewsItemItemFragment){
-                            handleBanner(zhihuNewsItem);
-                            setZhihuNewsItem(zhihuNewsItem);
+                            handleBanner(zhihuNewsLatest);
+                            setZhihuNewsLatest(zhihuNewsLatest);
                         }
 
                     }
@@ -54,19 +54,19 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
     /**
      *处理轮播图数据，调用view层方法，进行数据展示
      */
-    private void handleBanner(ZhihuNewsItem bean){
+    private void handleBanner(ZhihuNewsLatest bean){
         if(bean == null){
             //// TODO: 如果是空，表示数据请求失败，应该调用view层的相关方法，进行ui展示。
             return;
         }
         ArrayList<String> images = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
-        List<ZhihuNewsItem.TopStoriesBean> top_stories = bean.getTop_stories();
+        List<ZhihuNewsLatest.TopStoriesBean> top_stories = bean.getTop_stories();
         if(top_stories == null || top_stories.size() == 0){
             //此处返回一个banner为空的提示。
             return;
         }
-        for(ZhihuNewsItem.TopStoriesBean topStoriy: top_stories){
+        for(ZhihuNewsLatest.TopStoriesBean topStoriy: top_stories){
             images.add(topStoriy.getImage());
             titles.add(topStoriy.getTitle());
         }
@@ -77,11 +77,11 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
     }
 
     //方便activity和fragment获取
-    public ZhihuNewsItem getZhihuNewsItem(){
-        return mZhihuNewsItem;
+    public ZhihuNewsLatest getZhihuNewsLatest(){
+        return mZhihuNewsLatest;
     }
     //在可以获得bean的地方进行赋值。
-    private void setZhihuNewsItem(ZhihuNewsItem zhihuNewsItem){
-        this.mZhihuNewsItem = zhihuNewsItem;
+    private void setZhihuNewsLatest(ZhihuNewsLatest zhihuNewsLatest){
+        this.mZhihuNewsLatest = zhihuNewsLatest;
     }
 }

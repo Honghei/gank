@@ -1,6 +1,6 @@
 package com.honghei.gank.api;
 
-import com.honghei.gank.bean.zhihunews.ZhihuNewsItem;
+import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
 
 import retrofit2.http.GET;
 import rx.Observable;
@@ -15,7 +15,7 @@ public interface ZhihuApi {
 
 
    @GET("news/latest")
-   Observable<ZhihuNewsItem> getLatestNews();
+   Observable<ZhihuNewsLatest> getLatestNews();
 /*
     @GET("news/before/{time}")
     Observable<NewsTimeLine> getBeforetNews(@Path("time") String time);

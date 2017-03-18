@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.honghei.gank.R;
 import com.honghei.gank.adapter.ZhihuNewsItemRecyclerAdapter;
 import com.honghei.gank.base.ZhihuNewsItemBaseView;
-import com.honghei.gank.bean.zhihunews.ZhihuNewsItem;
+import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
 import com.honghei.gank.ui.GlideImageLoader;
 import com.honghei.gank.ui.activity.ZhihuNewsDetailActivity;
 import com.honghei.gank.ui.presenter.ZhihuNewsItemPresenter;
@@ -111,7 +111,7 @@ public class ZhihuNewsItemItemFragment extends Fragment implements ZhihuNewsItem
     }
 
     @Override
-    public void setRecyclerViewDatas(List<ZhihuNewsItem.StoriesBean> datas) {
+    public void setRecyclerViewDatas(List<ZhihuNewsLatest.StoriesBean> datas) {
         mAdapter.addDatas(datas);
     }
 
@@ -136,11 +136,11 @@ public class ZhihuNewsItemItemFragment extends Fragment implements ZhihuNewsItem
         public void OnBannerClick(int position) {
             if(mPresenter == null)
                 return;
-            ZhihuNewsItem zhihuNewsItem = mPresenter.getZhihuNewsItem();
-            if(zhihuNewsItem == null)
+            ZhihuNewsLatest zhihuNewsLatest = mPresenter.getZhihuNewsLatest();
+            if(zhihuNewsLatest == null)
                 return;
 
-            ZhihuNewsItem.TopStoriesBean topStoriesBean = zhihuNewsItem.getTop_stories().get(position);
+            ZhihuNewsLatest.TopStoriesBean topStoriesBean = zhihuNewsLatest.getTop_stories().get(position);
             Log.d("hnghei1191","轮播图被点击了！");
             Intent intent = new Intent(getActivity(),ZhihuNewsDetailActivity.class);
             intent.putExtra("id",topStoriesBean.getId());
