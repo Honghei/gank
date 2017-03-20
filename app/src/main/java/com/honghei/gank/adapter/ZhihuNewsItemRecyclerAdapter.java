@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.honghei.gank.MyApp;
 import com.honghei.gank.R;
 import com.honghei.gank.base.BaseRecyclerAdapter;
-import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
+import com.honghei.gank.bean.zhihunews.StoriesBean;
 import com.honghei.gank.ui.GlideImageLoader;
 
 /**
@@ -18,7 +18,7 @@ import com.honghei.gank.ui.GlideImageLoader;
  * @time 2017/3/16  13:36
  * @desc ${TODD}
  */
-public class ZhihuNewsItemRecyclerAdapter extends BaseRecyclerAdapter<ZhihuNewsLatest.StoriesBean> {
+public class ZhihuNewsItemRecyclerAdapter extends BaseRecyclerAdapter<StoriesBean> {
 
     //提供一个viewholder
     @Override
@@ -28,9 +28,14 @@ public class ZhihuNewsItemRecyclerAdapter extends BaseRecyclerAdapter<ZhihuNewsL
         return viewHolder;
     }
 
+    @Override
+    public boolean needToLoadMore() {
+        return true;
+    }
+
     //绑定数据
     @Override
-    public void onBind(RecyclerView.ViewHolder viewHolder, int RealPosition, ZhihuNewsLatest.StoriesBean data) {
+    public void onBind(RecyclerView.ViewHolder viewHolder, int RealPosition, StoriesBean data) {
         MyViewHolder myViewHolder = (MyViewHolder)viewHolder;
         GlideImageLoader.getInstance().displayImage(MyApp.mContext,
                 data.getImages().get(0),
@@ -48,4 +53,7 @@ public class ZhihuNewsItemRecyclerAdapter extends BaseRecyclerAdapter<ZhihuNewsL
             iv = (ImageView) itemView.findViewById(R.id.image_iv);
         }
     }
+
+
+
 }

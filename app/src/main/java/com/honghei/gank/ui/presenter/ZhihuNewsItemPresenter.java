@@ -5,8 +5,9 @@ import android.content.Context;
 import com.honghei.gank.api.ApiFactory;
 import com.honghei.gank.base.BasePresenter;
 import com.honghei.gank.base.ZhihuNewsItemBaseView;
+import com.honghei.gank.bean.zhihunews.ZhihuNewsBefore;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
-import com.honghei.gank.ui.fragment.ZhihuNewsItemItemFragment;
+import com.honghei.gank.ui.fragment.ZhihuNewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
                     @Override
                     public void call(ZhihuNewsLatest zhihuNewsLatest) {
 
-                        if(view instanceof ZhihuNewsItemItemFragment){
+                        if(view instanceof ZhihuNewsFragment){
                             handleBanner(zhihuNewsLatest);
                             setZhihuNewsLatest(zhihuNewsLatest);
                         }
@@ -48,6 +49,19 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
                     }
                 });
 
+    }
+
+    public void getBeforeZhihuNews(String date){
+        ApiFactory.getZhihuApiSingleton().getBeforetNews(date)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ZhihuNewsBefore>() {
+                    @Override
+                    public void call(ZhihuNewsBefore zhihuNewsBefore) {
+                        //数据请求完成。进行数据显示。
+                        view.setRecyclerViewDatas(zhihuNewsBefore.getStories());
+                    }
+                });
     }
 
 

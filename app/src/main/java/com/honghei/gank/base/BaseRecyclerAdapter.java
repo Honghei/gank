@@ -3,8 +3,11 @@ package com.honghei.gank.base;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.honghei.gank.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
+    public static final int TEPE_FOOTER = 2;
 
     private ArrayList<T> mDatas = new ArrayList<>();
 
@@ -45,21 +49,29 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemViewType(int position) {
-        if(mHeaderView == null) return TYPE_NORMAL;
-        if(position == 0) return TYPE_HEADER;
+
+        if(mHeaderView != null && position == 0) return TYPE_HEADER;
+        if(needToLoadMore() &&
+                mHeaderView == null ? (position == mDatas.size()) : (position == mDatas.size()+1))
+            return TEPE_FOOTER;
+
         return TYPE_NORMAL;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         if(mHeaderView != null && viewType == TYPE_HEADER) return new Holder(mHeaderView);
+        if(viewType == TEPE_FOOTER){
+            View listFooter = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerlist_footer,parent,false);
+            return new Holder(listFooter);
+        }
         return onCreate(parent, viewType);
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if(getItemViewType(position) == TYPE_HEADER) return;
+        if(getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TEPE_FOOTER) return;
 
         final int pos = getRealPosition(viewHolder);
         final T data = mDatas.get(pos);
@@ -110,7 +122,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
+        int itemCount = mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
+        if(needToLoadMore()){
+            itemCount++;
+        }
+        return itemCount;
     }
 
     public abstract RecyclerView.ViewHolder onCreate(ViewGroup parent, final int viewType);
@@ -124,5 +140,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public interface OnItemClickListener<T> {
         void onItemClick(int position, T data);
+    }
+
+
+    /**
+     * 如果子类有上拉加载更多的需求，覆写该方法，返回true。
+     * @return
+     */
+    public  boolean needToLoadMore(){
+        return false;
     }
 }

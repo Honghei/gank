@@ -25,9 +25,9 @@ public class DateUtils {
      * @param date date
      * @return String date
      */
-    public String ZhihuDailyDateFormat(long date) {
+    public static String ZhihuDailyDateFormat(long date) {
         String sDate;
-        Date d = new Date(date + 24*60*60*1000);
+        Date d = new Date(date);
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         sDate = format.format(d);
 

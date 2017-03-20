@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.honghei.gank.R;
-import com.honghei.gank.ui.fragment.ZhihuNewsItemItemFragment;
+import com.honghei.gank.ui.fragment.ZhihuNewsFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
-                .add(R.string.smarttablayout_fragmentname_1, ZhihuNewsItemItemFragment.class)
-                .add(R.string.smarttablayout_fragmentname_2, ZhihuNewsItemItemFragment.class)
-                .add(R.string.smarttablayout_fragmentname_3, ZhihuNewsItemItemFragment.class)
+                .add(R.string.smarttablayout_fragmentname_1, ZhihuNewsFragment.class)
+                .add(R.string.smarttablayout_fragmentname_2, ZhihuNewsFragment.class)
+                .add(R.string.smarttablayout_fragmentname_3, ZhihuNewsFragment.class)
                 .create());
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);

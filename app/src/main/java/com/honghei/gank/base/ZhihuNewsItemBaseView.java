@@ -1,7 +1,7 @@
 package com.honghei.gank.base;
 
 
-import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
+import com.honghei.gank.bean.zhihunews.StoriesBean;
 
 import java.util.List;
 
@@ -21,6 +21,6 @@ public interface ZhihuNewsItemBaseView<T> extends BaseView<T> {
 
     void setHeaderView();
 
-    void setRecyclerViewDatas(List<ZhihuNewsLatest.StoriesBean> datas);
+    void setRecyclerViewDatas(List<StoriesBean> datas);
 
 }
