@@ -43,6 +43,8 @@ public class ZhihuNewsItemRecyclerAdapter extends BaseRecyclerAdapter<StoriesBea
         myViewHolder.tv.setText(data.getTitle());
     }
 
+
+
     private class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tv;
         ImageView iv;

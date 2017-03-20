@@ -23,4 +23,10 @@ public interface ZhihuNewsItemBaseView<T> extends BaseView<T> {
 
     void setRecyclerViewDatas(List<StoriesBean> datas);
 
+    void setRecyclerViewLatestDatas(List<StoriesBean> datas);
+
+    void startRefresh();
+
+    void stopRefresh();
+
 }

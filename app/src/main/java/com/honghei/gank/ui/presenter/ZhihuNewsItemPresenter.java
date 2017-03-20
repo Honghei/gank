@@ -1,10 +1,12 @@
 package com.honghei.gank.ui.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.honghei.gank.api.ApiFactory;
 import com.honghei.gank.base.BasePresenter;
 import com.honghei.gank.base.ZhihuNewsItemBaseView;
+import com.honghei.gank.bean.zhihunews.StoriesBean;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsBefore;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
 import com.honghei.gank.ui.fragment.ZhihuNewsFragment;
@@ -33,7 +35,7 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
 
     public void getZhihuItemNews(){
         //进行网络请求
-
+        view.startRefresh();
         ApiFactory.getZhihuApiSingleton().getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -42,13 +44,60 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
                     public void call(ZhihuNewsLatest zhihuNewsLatest) {
 
                         if(view instanceof ZhihuNewsFragment){
-                            handleBanner(zhihuNewsLatest);
-                            setZhihuNewsLatest(zhihuNewsLatest);
+                            handleLatest(zhihuNewsLatest);
+
+                            view.stopRefresh();
                         }
 
                     }
+
+
                 });
 
+    }
+
+    private void handleLatest(ZhihuNewsLatest zhihuNewsLatest) {
+        //这里需要做重复元素判断。
+
+        List<StoriesBean> stories = zhihuNewsLatest.getStories();
+
+        if(mZhihuNewsLatest == null)
+        {
+            setZhihuNewsLatest(zhihuNewsLatest);
+            view.setRecyclerViewDatas(zhihuNewsLatest.getStories());
+            handleBanner(zhihuNewsLatest);
+            return;
+        }
+        List<StoriesBean> beforeStroies = mZhihuNewsLatest.getStories();
+
+        List<StoriesBean> tempStroies = new ArrayList<>();
+        for (StoriesBean storiesBean : stories) {
+            for(StoriesBean storiesBeanBefore : beforeStroies){
+                if(storiesBean.getId() == storiesBeanBefore.getId())
+                    tempStroies.add(storiesBean);
+
+            }
+        }
+        for (StoriesBean bean : tempStroies){
+            stories.remove(bean);
+        }
+        Log.i("honghei1992",stories.toString());
+
+        List<ZhihuNewsLatest.TopStoriesBean> top_storiesBefore = mZhihuNewsLatest.getTop_stories();
+        List<ZhihuNewsLatest.TopStoriesBean> top_storiesLatest = zhihuNewsLatest.getTop_stories();
+
+        for(int i = 0; i<top_storiesLatest.size();i++){
+            if(top_storiesBefore.get(i).getId() != top_storiesBefore.get(i).getId()){
+                handleBanner(zhihuNewsLatest);
+                view.setRecyclerViewDatas(top_storiesLatest);
+            }
+        }
+
+        if(stories.size() != 0) {
+            view.setRecyclerViewLatestDatas(stories);
+            setZhihuNewsLatest(zhihuNewsLatest);
+
+        }
     }
 
     public void getBeforeZhihuNews(String date){
@@ -86,7 +135,7 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
         }
         view.setBanner(images,titles);
         view.setHeaderView();
-        view.setRecyclerViewDatas(bean.getStories());
+
 
     }
 

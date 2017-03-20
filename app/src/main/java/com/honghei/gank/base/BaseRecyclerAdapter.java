@@ -47,6 +47,12 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         notifyDataSetChanged();
     }
 
+    public void addLatestDatas(List<T> datas) {
+
+        mDatas.addAll(0,datas);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemViewType(int position) {
 
@@ -63,7 +69,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         if(mHeaderView != null && viewType == TYPE_HEADER) return new Holder(mHeaderView);
         if(viewType == TEPE_FOOTER){
             View listFooter = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerlist_footer,parent,false);
-            return new Holder(listFooter);
+            return new FooterHolder(listFooter);
         }
         return onCreate(parent, viewType);
     }
@@ -71,8 +77,16 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if(getItemViewType(position) == TYPE_HEADER || getItemViewType(position) == TEPE_FOOTER) return;
+        if(getItemViewType(position) == TYPE_HEADER) return;
 
+        if(getItemViewType(position) == TEPE_FOOTER){
+            FooterHolder holder = (FooterHolder) viewHolder;
+            if(mDatas.size() == 0)
+                holder.mFootView.setVisibility(View.GONE);
+            else
+                holder.mFootView.setVisibility(View.VISIBLE);
+            return;
+        }
         final int pos = getRealPosition(viewHolder);
         final T data = mDatas.get(pos);
         onBind(viewHolder, pos, data);
@@ -135,6 +149,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     public class Holder extends RecyclerView.ViewHolder {
         public Holder(View itemView) {
             super(itemView);
+        }
+    }
+
+    private class FooterHolder extends RecyclerView.ViewHolder{
+        View mFootView;
+        public FooterHolder(View itemView) {
+            super(itemView);
+            mFootView = itemView.findViewById(R.id.footer_container);
         }
     }
 

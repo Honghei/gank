@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="48dp"
               android:layout_marginTop="8dp"
               android:layout_marginBottom="8dp"
-              android:background="#8fff">
+              android:gravity="center_horizontal"
+              android:id="@+id/footer_container"
+              android:visibility="gone"
+              android:background="#51768c">
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/address_looking_up"
         style="?android:attr/progressBarStyleInverse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
         android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="@string/loading_more"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/address_looking_up"
-        android:layout_alignBaseline="@id/address_looking_up"
-        android:layout_marginTop="10dp"
-       />
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"/>
 
-
-</RelativeLayout>
+</LinearLayout>

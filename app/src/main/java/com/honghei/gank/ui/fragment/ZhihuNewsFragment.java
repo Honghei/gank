@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +48,7 @@ public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView
     RecyclerView.LayoutManager mLayoutManager;
 
     Calendar mCalendar = Calendar.getInstance();
+    private SwipeRefreshLayout mSwiper;
 
 
     @Nullable
@@ -88,6 +90,21 @@ public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView
         mAdapter = new ZhihuNewsItemRecyclerAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(new ZhihuRecyclerScrollistener());
+
+        initSwipeLayout(view);
+
+    }
+
+    private void initSwipeLayout(View view) {
+
+        mSwiper = (SwipeRefreshLayout) view.findViewById(R.id.zhihunews_swipelayout);
+        //为SwipeRefreshLayout设置监听事件
+        mSwiper.setOnRefreshListener(new ZhihuNewsOnrefrashlistener());
+        //为SwipeRefreshLayout设置刷新时的颜色变化，最多可以设置4种
+        mSwiper.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
 
@@ -124,6 +141,26 @@ public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView
     public void setRecyclerViewDatas(List<StoriesBean> datas) {
         mAdapter.addDatas(datas);
     }
+
+    @Override
+    public void setRecyclerViewLatestDatas(List<StoriesBean> datas) {
+        mAdapter.addLatestDatas(datas);
+    }
+
+    @Override
+    public void startRefresh() {
+        if(mSwiper != null && !mSwiper.isRefreshing())
+            mSwiper.setRefreshing(true);
+    }
+
+    @Override
+    public void stopRefresh() {
+        if(mSwiper != null && mSwiper.isRefreshing())
+            mSwiper.setRefreshing(false);
+
+    }
+
+
 
     /****************************优化轮播图体验**********************************/
     @Override
@@ -201,5 +238,14 @@ public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView
                     isSlidingToLast = false;
                 }
             }
+    }
+
+    private class ZhihuNewsOnrefrashlistener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            //在这里处理网络请求。
+            if(mPresenter != null) mPresenter.getZhihuItemNews();
+        }
     }
 }
