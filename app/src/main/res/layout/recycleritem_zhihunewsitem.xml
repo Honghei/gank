@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.honghei.gank.widght.SelfDefinedCardView
+<android.support.v7.widget.CardView
            xmlns:android="http://schemas.android.com/apk/res/android"
            xmlns:app="http://schemas.android.com/apk/res-auto"
            android:id="@+id/cardview"
@@ -10,11 +10,19 @@
            android:layout_width="match_parent"
            android:layout_height="120dp"
            app:cardBackgroundColor="#ffff"
-           >
+
+           android:clickable="false"
+           android:focusable="false"
+           android:longClickable="false"
+    >
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:orientation="horizontal"
+               android:id="@+id/ll_container"
+
+               android:clickable="false"
+               android:focusable="false"
                >
                <TextView
                    android:id="@+id/title_tv"
@@ -26,6 +34,9 @@
                    android:layout_marginLeft="5dp"
                    android:layout_height="wrap_content"
                    android:textColor="@android:color/black"
+
+                   android:clickable="false"
+                   android:focusable="false"
                    />
                <ImageView
                    android:id="@+id/image_iv"
@@ -34,8 +45,11 @@
                    android:layout_weight="1"
                    android:layout_gravity="right|center_vertical"
                    android:layout_height="match_parent"
+
+                   android:clickable="false"
+                   android:focusable="false"
                    />
            </LinearLayout>
 
-</com.honghei.gank.widght.SelfDefinedCardView>
+</android.support.v7.widget.CardView>
 

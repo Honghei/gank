@@ -7,7 +7,7 @@
     android:id="@+id/zhihunews_swipelayout"
     >
 
-    <com.honghei.gank.widght.SelfDefinedRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recylcerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

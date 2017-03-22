@@ -5,17 +5,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.honghei.gank.R;
 import com.honghei.gank.ui.fragment.ZhihuNewsFragment;
+import com.honghei.gank.util.LayoutUtil;
+import com.honghei.gank.widght.SelfDefinedViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -55,12 +57,36 @@ public class MainActivity extends AppCompatActivity
                 .add(R.string.smarttablayout_fragmentname_3, ZhihuNewsFragment.class)
                 .create());
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+
+        SelfDefinedViewPager viewPager = (SelfDefinedViewPager) findViewById(R.id.viewpager);
+        viewPager.setPagingEnabled(true);
         viewPager.setAdapter(adapter);
+        setViewPagerMargin(viewPager);
+
 
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
     }
+
+
+    /**
+     * 设置smarttablayout的margintop值。
+     */
+    private void setViewPagerMargin(SelfDefinedViewPager viewPager) {
+
+        int dimension = (int) getResources().getDimension(R.dimen.tablayout_height);
+
+
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        LayoutUtil.setViewMargin(viewPager,dimension+actionBarHeight);
+    }
+
+
 
     @Override
     public void onBackPressed() {

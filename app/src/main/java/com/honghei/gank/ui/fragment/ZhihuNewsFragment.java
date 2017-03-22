@@ -10,13 +10,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.honghei.gank.R;
 import com.honghei.gank.adapter.ZhihuNewsItemRecyclerAdapter;
+import com.honghei.gank.base.BaseRecyclerAdapter;
 import com.honghei.gank.base.ZhihuNewsItemBaseView;
 import com.honghei.gank.bean.zhihunews.StoriesBean;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
@@ -24,12 +24,12 @@ import com.honghei.gank.ui.GlideImageLoader;
 import com.honghei.gank.ui.activity.ZhihuNewsDetailActivity;
 import com.honghei.gank.ui.presenter.ZhihuNewsItemPresenter;
 import com.honghei.gank.util.DateUtils;
-import com.honghei.gank.widght.SelfDefinedRecyclerView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,7 +42,7 @@ import java.util.List;
 public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView<ZhihuNewsItemPresenter> {
     private ZhihuNewsItemPresenter mPresenter;
     private Banner mBanner;
-    private SelfDefinedRecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     public ZhihuNewsItemRecyclerAdapter mAdapter;
     private View mBannerView;
     RecyclerView.LayoutManager mLayoutManager;
@@ -82,12 +82,21 @@ public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView
         mBannerView = LayoutInflater.from(view.getContext()).inflate(R.layout.banner_zhihunewsitem,null);
         mBanner = (Banner) mBannerView.findViewById(R.id.banner);
         mBanner.setOnBannerListener(new ZhihuNewsOnbannerListener());
-        mRecyclerView = (SelfDefinedRecyclerView) view.findViewById(R.id.recylcerview);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recylcerview);
         mLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
         mAdapter = new ZhihuNewsItemRecyclerAdapter();
+
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object data) {
+                ArrayList<StoriesBean> datas = mAdapter.getDatas();
+                jump2DetailActivityFromRecyclerItem(datas.get(position));
+            }
+        });
+
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(new ZhihuRecyclerScrollistener());
 
@@ -188,12 +197,22 @@ public class ZhihuNewsFragment extends Fragment implements ZhihuNewsItemBaseView
                 return;
 
             ZhihuNewsLatest.TopStoriesBean topStoriesBean = zhihuNewsLatest.getTop_stories().get(position);
-            Log.d("hnghei1191","轮播图被点击了！");
-            Intent intent = new Intent(getActivity(),ZhihuNewsDetailActivity.class);
-            intent.putExtra("id",topStoriesBean.getId());
-            startActivity(intent);
+            jump2DetailActivityFromBanner(topStoriesBean);
         }
     }
+
+    private void jump2DetailActivityFromBanner(ZhihuNewsLatest.TopStoriesBean topStoriesBean) {
+        Intent intent = new Intent(getActivity(),ZhihuNewsDetailActivity.class);
+        intent.putExtra("id",topStoriesBean.getId());
+        startActivity(intent);
+    }
+
+    private void jump2DetailActivityFromRecyclerItem(StoriesBean storiesBean){
+        Intent intent = new Intent(getActivity(),ZhihuNewsDetailActivity.class);
+        intent.putExtra("id",storiesBean.getId());
+        startActivity(intent);
+    }
+
 
     private class ZhihuRecyclerScrollistener extends OnScrollListener{
 

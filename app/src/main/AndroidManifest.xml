@@ -25,7 +25,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ZhihuNewsDetailActivity"/>
+        <activity android:name=".ui.activity.ZhihuNewsDetailActivity"
+            android:theme="@style/newsdetail_theme"
+            />
 
     </application>
 

@@ -36,7 +36,7 @@ dependencies {
     
 
     //滑动退出
-    
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
     //Optional: see how to use the utility.
     //Optional: see how to use the utility.
     compile 'com.android.support:appcompat-v7:25.2.0'

@@ -1,5 +1,6 @@
 package com.honghei.gank.api;
 
+import com.honghei.gank.bean.zhihunews.NewsDetailBean;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsBefore;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
 
@@ -8,9 +9,7 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
- * Created by Werb on 2016/8/18.
- * Werb is Wanbo.
- * Contact Me : werbhelius@gmail.com
+ * Created by Honghei on 2017/3/7.
  * get Zhihu with retrofit
  */
 public interface ZhihuApi {
@@ -21,8 +20,8 @@ public interface ZhihuApi {
 
     @GET("news/before/{time}")
     Observable<ZhihuNewsBefore> getBeforetNews(@Path("time") String time);
-/*
+
 
     @GET("news/{id}")
-    Observable<News> getDetailNews(@Path("id") String id);*/
+    Observable<NewsDetailBean> getDetailNews(@Path("id") String id);
 }

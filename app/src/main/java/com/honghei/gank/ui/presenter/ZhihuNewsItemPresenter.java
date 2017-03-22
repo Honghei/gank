@@ -59,8 +59,6 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
     private void handleLatest(ZhihuNewsLatest zhihuNewsLatest) {
         //这里需要做重复元素判断。
 
-        List<StoriesBean> stories = zhihuNewsLatest.getStories();
-
         if(mZhihuNewsLatest == null)
         {
             setZhihuNewsLatest(zhihuNewsLatest);
@@ -68,6 +66,7 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
             handleBanner(zhihuNewsLatest);
             return;
         }
+        List<StoriesBean> stories = zhihuNewsLatest.getStories();
         List<StoriesBean> beforeStroies = mZhihuNewsLatest.getStories();
 
         List<StoriesBean> tempStroies = new ArrayList<>();
@@ -89,7 +88,6 @@ public class ZhihuNewsItemPresenter implements BasePresenter<ZhihuNewsItemBaseVi
         for(int i = 0; i<top_storiesLatest.size();i++){
             if(top_storiesBefore.get(i).getId() != top_storiesBefore.get(i).getId()){
                 handleBanner(zhihuNewsLatest);
-                view.setRecyclerViewDatas(top_storiesLatest);
             }
         }
 

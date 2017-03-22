@@ -47,6 +47,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         notifyDataSetChanged();
     }
 
+    public ArrayList<T> getDatas() {
+        return mDatas;
+    }
+
     public void addLatestDatas(List<T> datas) {
 
         mDatas.addAll(0,datas);
@@ -94,12 +98,16 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         if(mListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    mListener.onItemClick(pos, data);
+                public void onClick(View view) {
+                    mListener.onItemClick(pos,data);
                 }
             });
         }
     }
+
+
+
+
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {

@@ -7,5 +7,12 @@ package com.honghei.gank.base;
  */
 public interface ZhihuNewsDetailBaseView<T> extends BaseView<T> {
 
+    void onLoading();
+
+    void onError();
+
+    void loadData(String data);
+
+    void loadUrl(String url);
 
 }
