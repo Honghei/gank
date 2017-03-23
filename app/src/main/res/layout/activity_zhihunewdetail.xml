@@ -1,13 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/coordinatorLayout">
 
-   <WebView
+   <android.support.design.widget.AppBarLayout
+       android:id="@+id/app_bar"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/detail_webview"
-       ></WebView>
+       android:layout_height="wrap_content"
+       android:fitsSystemWindows="true"
+       android:theme="@style/AppTheme.AppBarOverlay">
 
-</LinearLayout>
+      <android.support.design.widget.CollapsingToolbarLayout
+          android:id="@+id/toolbar_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fitsSystemWindows="true"
+          app:contentScrim="@color/colorPrimary"
+          app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+         <ImageView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/image_view"
+             android:fitsSystemWindows="true"
+             android:scaleType="fitXY"
+             android:scrollbarStyle="insideInset"
+             android:scrollbarAlwaysDrawVerticalTrack="true"
+
+             />
+
+         <android.support.v7.widget.Toolbar
+             android:id="@+id/toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+             app:layout_collapseMode="pin"
+             app:popupTheme="@style/AppTheme.PopupOverlay"
+             app:background="@color/colorPrimary"/>
+
+      </android.support.design.widget.CollapsingToolbarLayout>
+
+   </android.support.design.widget.AppBarLayout>
+
+
+      <android.support.v4.widget.NestedScrollView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/scrollView"
+          android:scrollbars="vertical"
+          android:scrollbarFadeDuration="1"
+          android:fadeScrollbars="true"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          >
+         <WebView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/web_view" />
+
+      </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>

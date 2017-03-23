@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.honghei.gank.R;
@@ -25,6 +27,14 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    FloatingActionButton fab;
+
+    /**
+     * 表示的是当前选中的是第几页，在dispatchtouch中与手势一起作用于tab的hide和show，如果是1.2.页就直接不显示了
+     *
+     * 这样考虑的原因是 hide和show方法会影响到fab的gone和visiable属性。
+     */
+    private int selectedPage = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,13 +72,43 @@ public class MainActivity extends AppCompatActivity
         SelfDefinedViewPager viewPager = (SelfDefinedViewPager) findViewById(R.id.viewpager);
         viewPager.setPagingEnabled(true);
         viewPager.setAdapter(adapter);
-        setViewPagerMargin(viewPager);
+
+       /* setViewPagerMargin(viewPager);*/
 
 
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
+        setTabPageChangeListen(viewPagerTab);
     }
 
+
+
+    float x;
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x = event.getRawY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float nextX = event.getRawY();
+                float desX = x-nextX;
+                if(selectedPage == 0 && desX >0){
+                    fab.hide();
+                }else if(selectedPage == 0 && desX<0){
+                    fab.show();
+                }
+
+                break;
+            case MotionEvent.ACTION_UP:
+
+                break;
+            default:
+                break;
+        }
+
+        return super.dispatchTouchEvent(event);
+    }
 
     /**
      * 设置smarttablayout的margintop值。
@@ -144,4 +184,29 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void setTabPageChangeListen(SmartTabLayout tabLayout){
+        tabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    fab.setVisibility(View.VISIBLE);
+                }else {
+                    fab.setVisibility(View.GONE);
+                }
+                selectedPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
 }

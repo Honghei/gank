@@ -34,9 +34,8 @@ public class GlideImageLoader extends ImageLoader {
     //
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        Glide.with(mContext).load(path).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageView);
+        Glide.with(mContext).load(path).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.mipmap.fillbitmap).error(R.mipmap.fillbitmap).into(imageView);
 
     }
-
 
 }

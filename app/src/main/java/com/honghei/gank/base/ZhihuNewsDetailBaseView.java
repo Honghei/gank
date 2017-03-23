@@ -11,8 +11,14 @@ public interface ZhihuNewsDetailBaseView<T> extends BaseView<T> {
 
     void onError();
 
-    void loadData(String data);
+    void loadDataWithBaseUrl(String baseUrl,String data);
 
     void loadUrl(String url);
+
+    void setToolbarTitle(String title);
+
+    void setTitleImageRes(String url);
+
+
 
 }
