@@ -7,7 +7,7 @@ public class ApiFactory {
 
     protected static final Object monitor = new Object();
     static ZhihuApi zhihuApiSingleton = null;
-
+    static GankApi gankApiSingleton = null;
 
     //return Singleton
     public static ZhihuApi getZhihuApiSingleton() {
@@ -18,5 +18,16 @@ public class ApiFactory {
             return zhihuApiSingleton;
         }
     }
+
+    //return Singleton
+    public static GankApi getGankApiSingleton() {
+        synchronized (monitor) {
+            if (gankApiSingleton == null) {
+                gankApiSingleton = new ApiRetrofit().getGankApiService();
+            }
+            return gankApiSingleton;
+        }
+    }
+
 
 }

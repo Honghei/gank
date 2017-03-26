@@ -26,14 +26,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiRetrofit {
 
     public ZhihuApi ZhihuApiService;
+    public GankApi GankApiService;
 
     public static final String ZHIHU_BASE_URL = "http://news-at.zhihu.com/api/4/";
-
+    public static final String GANK_BASE_URL = "http://gank.io/api/";
 
     public ZhihuApi getZhihuApiService() {
         return ZhihuApiService;
     }
 
+    public GankApi getGankApiService(){
+        return GankApiService;
+    }
 
     ApiRetrofit() {
         //cache url
@@ -52,10 +56,16 @@ public class ApiRetrofit {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
+        Retrofit retrofit_gank = new Retrofit.Builder()
+                .baseUrl(GANK_BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
 
 
         ZhihuApiService = retrofit_zhihu.create(ZhihuApi.class);
-
+        GankApiService = retrofit_gank.create(GankApi.class);
     }
 
     //cache
