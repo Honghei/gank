@@ -133,7 +133,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         if(lp != null
                 && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
-            p.setFullSpan(holder.getLayoutPosition() == 0);
+            if(mHeaderView!=null)
+                p.setFullSpan(holder.getLayoutPosition() == 0);
+            if(holder.getLayoutPosition() == (mHeaderView == null ? mDatas.size() : mDatas.size()+1)){
+                p.setFullSpan(true);
+            }
         }
     }
 
