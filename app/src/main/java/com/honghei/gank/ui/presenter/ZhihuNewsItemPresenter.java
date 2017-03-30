@@ -9,7 +9,7 @@ import com.honghei.gank.base.ZhihuNewsItemBaseView;
 import com.honghei.gank.bean.zhihunews.StoriesBean;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsBefore;
 import com.honghei.gank.bean.zhihunews.ZhihuNewsLatest;
-import com.honghei.gank.ui.fragment.ZhihuNewsFragment;
+import com.honghei.gank.ui.fragment.zhihu.ZhihuNewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

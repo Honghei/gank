@@ -13,6 +13,8 @@ public interface GankBaseView<T> extends BaseView<T> {
 
     void setRecyclerViewDatas(List<MeiZhi.ResultsBean> datas);
 
+    void setRecyclerViewLatestDatas(List<MeiZhi.ResultsBean> datas);
 
+    void stopRefrash();
 
 }

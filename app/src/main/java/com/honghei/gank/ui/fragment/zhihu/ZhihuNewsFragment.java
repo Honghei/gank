@@ -1,4 +1,4 @@
-package com.honghei.gank.ui.fragment;
+package com.honghei.gank.ui.fragment.zhihu;
 
 import android.content.Intent;
 import android.os.Bundle;

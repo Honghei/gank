@@ -17,8 +17,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.honghei.gank.R;
-import com.honghei.gank.ui.fragment.GankFragment;
-import com.honghei.gank.ui.fragment.ZhihuNewsFragment;
+import com.honghei.gank.ui.fragment.gank.GankFragment;
+import com.honghei.gank.ui.fragment.zhihu.ZhihuNewsFragment;
 import com.honghei.gank.util.LayoutUtil;
 import com.honghei.gank.widght.SelfDefinedViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
