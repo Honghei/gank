@@ -41,6 +41,8 @@ public class PostBean {
     private String film_length;
     private String datatype;
     private CategoryBean category;
+    private ColumnsBean column;
+
 
     public int getId() {
         return id;
@@ -169,5 +171,9 @@ public class PostBean {
     public void setCategory(CategoryBean category) {
         this.category = category;
     }
+
+    public ColumnsBean getColumn(){return column; }
+
+    public void setColumn(ColumnsBean column) {this.column = column; }
 
 }

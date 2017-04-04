@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="smarttablayout_fragmentname_1">"知乎日报"</string>
     <string name="smarttablayout_fragmentname_2">"干货"</string>
-    <string name="smarttablayout_fragmentname_3">"未完待续..."</string>
+    <string name="smarttablayout_fragmentname_3">"好奇心"</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
