@@ -8,6 +8,7 @@ public class ApiFactory {
     protected static final Object monitor = new Object();
     static ZhihuApi zhihuApiSingleton = null;
     static GankApi gankApiSingleton = null;
+    static QDailyApi sQDailyApiSingleton = null;
 
     //return Singleton
     public static ZhihuApi getZhihuApiSingleton() {
@@ -28,6 +29,19 @@ public class ApiFactory {
             return gankApiSingleton;
         }
     }
+
+
+    //return Singleton
+    public static QDailyApi getQDailyApiSingleton() {
+        synchronized (monitor) {
+            if (sQDailyApiSingleton == null) {
+                sQDailyApiSingleton = new ApiRetrofit().getQDailyApiService();
+            }
+            return sQDailyApiSingleton;
+        }
+    }
+
+
 
 
 }
