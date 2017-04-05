@@ -176,4 +176,26 @@ public class PostBean {
 
     public void setColumn(ColumnsBean column) {this.column = column; }
 
+    @Override
+    public String toString() {
+        return "PostBean{" +
+                "id=" + id +
+                ", genre=" + genre +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", publish_time=" + publish_time +
+                ", image='" + image + '\'' +
+                ", start_time=" + start_time +
+                ", comment_count=" + comment_count +
+                ", praise_count=" + praise_count +
+                ", super_tag='" + super_tag + '\'' +
+                ", page_style=" + page_style +
+                ", post_id=" + post_id +
+                ", appview='" + appview + '\'' +
+                ", film_length='" + film_length + '\'' +
+                ", datatype='" + datatype + '\'' +
+                ", category=" + category +
+                ", column=" + column +
+                '}';
+    }
 }

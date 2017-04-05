@@ -160,4 +160,25 @@ public class ColumnsBean {
         this.share = share;
     }
 
+
+    @Override
+    public String toString() {
+        return "ColumnsBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", subscribe_status=" + subscribe_status +
+                ", icon='" + icon + '\'' +
+                ", image='" + image + '\'' +
+                ", image_large='" + image_large + '\'' +
+                ", content_provider='" + content_provider + '\'' +
+                ", show_type=" + show_type +
+                ", genre=" + genre +
+                ", subscriber_num=" + subscriber_num +
+                ", post_count=" + post_count +
+                ", sort_time='" + sort_time + '\'' +
+                ", column_tag='" + column_tag + '\'' +
+                ", share=" + share +
+                '}';
+    }
 }

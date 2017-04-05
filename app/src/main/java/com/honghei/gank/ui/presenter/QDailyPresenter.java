@@ -1,7 +1,5 @@
 package com.honghei.gank.ui.presenter;
 
-import android.util.Log;
-
 import com.honghei.gank.api.ApiFactory;
 import com.honghei.gank.base.BasePresenter;
 import com.honghei.gank.base.QDailyBaseView;
@@ -46,8 +44,7 @@ public class QDailyPresenter implements BasePresenter<QDailyBaseView> {
                 .subscribe(new Action1<List<FeedsBean>>() {
                     @Override
                     public void call(List<FeedsBean> feedsBeen) {
-                        mView.onSuccess();
-                        Log.i("hongheibisheng",feedsBeen.size()+feedsBeen.toString());
+                        mView.onSuccess(feedsBeen);
                     }
                 });
 
@@ -71,13 +68,12 @@ public class QDailyPresenter implements BasePresenter<QDailyBaseView> {
             FeedsBean bean = new FeedsBean();
             PostBean postBean = new PostBean();
             postBean.setColumn(columns.get(i));
-            bean.setPost(new PostBean());
+            bean.setPost(postBean);
             Random random = new Random();
             int insertPos = random.nextInt(feedsSize - 1);
             feeds.add(insertPos,bean);
             feedsSize = feeds.size();
         }
-
 
         return feeds;
     }

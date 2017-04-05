@@ -90,7 +90,7 @@ public class GankFragment extends Fragment implements GankBaseView<GankPresenter
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
-                //在这里实现页面跳转。// TODO: 2017/3/26
+                //在这里实现页面跳转。
 
                 if(data instanceof MeiZhi.ResultsBean){
                     Intent intent = new Intent(getActivity(),GankDetailActivity.class);

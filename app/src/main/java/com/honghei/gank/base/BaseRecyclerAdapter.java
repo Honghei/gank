@@ -20,7 +20,7 @@ import java.util.List;
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int TYPE_HEADER = 0;
-    public static final int TYPE_NORMAL = 1;
+    public static final int TYPE_NORMAL = 10086;
     public static final int TEPE_FOOTER = 2;
 
     private ArrayList<T> mDatas = new ArrayList<>();

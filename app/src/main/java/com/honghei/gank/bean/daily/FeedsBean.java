@@ -39,4 +39,13 @@ public class FeedsBean {
     public void setPost(PostBean post) {
         this.post = post;
     }
+
+    @Override
+    public String toString() {
+        return "FeedsBean{" +
+                "image='" + image + '\'' +
+                ", type=" + type +
+                ", post=" + post +
+                '}';
+    }
 }
