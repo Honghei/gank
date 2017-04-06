@@ -22,6 +22,6 @@ public interface QDailyBaseView extends BaseView<QDailyPresenter> {
 
     void onLoadMore();
 
-    void setBanner(List<String> images, List<String> titles);
+    void setBanner(List<String> images, List<String> titles,List<String> appviews);
 
 }

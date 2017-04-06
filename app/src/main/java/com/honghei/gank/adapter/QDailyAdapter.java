@@ -6,8 +6,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.honghei.gank.MyApp;
 import com.honghei.gank.R;
+import com.honghei.gank.bean.daily.ColumnsBean;
 import com.honghei.gank.bean.daily.FeedsBean;
 
 import java.util.ArrayList;
@@ -96,7 +101,7 @@ public class QDailyAdapter extends RecyclerView.Adapter {
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
             case TYPE_HEAD:
-
+                viewHolder = new HeadHolder(mHeaderView);
                 break;
             case TYPE_END:
                 View listFooter = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerlist_footer,parent,false);
@@ -121,6 +126,31 @@ public class QDailyAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(getItemViewType(position) == TYPE_HEAD) return;
+
+        if(getItemViewType(position) == TYPE_END){
+            FooterHolder mFooterHolder = (FooterHolder) holder;
+            if(mDatas.size() == 0)
+                mFooterHolder.footer_container.setVisibility(View.GONE);
+            else
+                mFooterHolder.footer_container.setVisibility(View.VISIBLE);
+            return;
+        }
+        int realPosition = getRealPosition(holder);
+
+        switch (getItemViewType(position)){
+            case TYPE_COLUMN:
+                ColumnsHolder mColumnsHolder = (ColumnsHolder) holder;
+                setColumnData(mColumnsHolder,realPosition);
+                break;
+            case TYPE_FEED_COLUMN:
+
+                break;
+            case TYPE_FEED_NORMAL:
+
+                break;
+
+        }
 
     }
 
@@ -174,6 +204,30 @@ public class QDailyAdapter extends RecyclerView.Adapter {
         void onItemClick(int position,FeedsBean data);
     }
 
+    /*****************************填充数据*****************************************/
+    /*
+     *为column布局填充数据
+     */
+    private void setColumnData(ColumnsHolder mColumnsHolder, final int realPosition) {
+        ColumnsBean column = mDatas.get(realPosition).getPost().getColumn();
+
+        mColumnsHolder.columns_name.setText(column.getName());
+        mColumnsHolder.columns_content_provider.setText("本专栏由"+column.getContent_provider()+"提供");
+        mColumnsHolder.columns_description.setText("专题介绍:"+column.getDescription());
+        mColumnsHolder.columns_sort_time.setText("最近更新时间:"+column.getSort_time());
+        mColumnsHolder.columns_subscriber_num.setText("订阅数:"+column.getSubscriber_num());
+
+        loadImageByGilide(column.getIcon(),mColumnsHolder.columns_ic);
+        loadImageByGilide(column.getImage(),mColumnsHolder.columns_image);
+
+        mColumnsHolder.columns_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemClick(realPosition,mDatas.get(realPosition));
+            }
+        });
+    }
+
 
     /*****************************viewholder************************************/
 
@@ -186,17 +240,30 @@ public class QDailyAdapter extends RecyclerView.Adapter {
 
 
     private class FooterHolder extends RecyclerView.ViewHolder{
-
+        public View footer_container;
         public FooterHolder(View itemView) {
             super(itemView);
+            footer_container = itemView.findViewById(R.id.footer_container);
         }
     }
 
 
     private class ColumnsHolder extends RecyclerView.ViewHolder{
+        public ImageView columns_ic,columns_image;
+        public TextView columns_name,columns_description,columns_content_provider,
+                columns_sort_time,columns_subscriber_num;
+        public View columns_root;
 
         public ColumnsHolder(View itemView) {
             super(itemView);
+            columns_ic = (ImageView) itemView.findViewById(R.id.columns_ic);
+            columns_image = (ImageView) itemView.findViewById(R.id.columns_image);
+            columns_name = (TextView) itemView.findViewById(R.id.columns_name);
+            columns_description = (TextView) itemView.findViewById(R.id.columns_description);
+            columns_content_provider = (TextView) itemView.findViewById(R.id.columns_content_provider);
+            columns_sort_time = (TextView) itemView.findViewById(R.id.columns_sort_time);
+            columns_subscriber_num = (TextView) itemView.findViewById(R.id.columns_subscriber_num);
+            columns_root = itemView.findViewById(R.id.columns_root);
         }
     }
 
@@ -213,5 +280,9 @@ public class QDailyAdapter extends RecyclerView.Adapter {
         }
     }
 
+    private void loadImageByGilide(String url,ImageView iv){
+        Glide.with(MyApp.mContext).load(url).placeholder(R.mipmap.fillbitmap).error(R.mipmap.fillbitmap)
+                .fitCenter().into(iv);
+    }
 
 }

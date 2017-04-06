@@ -3,11 +3,13 @@ package com.honghei.gank.ui.presenter;
 import com.honghei.gank.api.ApiFactory;
 import com.honghei.gank.base.BasePresenter;
 import com.honghei.gank.base.QDailyBaseView;
+import com.honghei.gank.bean.daily.BannersBean;
 import com.honghei.gank.bean.daily.ColumnsBean;
 import com.honghei.gank.bean.daily.FeedsBean;
 import com.honghei.gank.bean.daily.PostBean;
 import com.honghei.gank.bean.daily.QDailyBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -33,14 +35,15 @@ public class QDailyPresenter implements BasePresenter<QDailyBaseView> {
     public void getQdailyDatas(String num){
         ApiFactory.getQDailyApiSingleton().getQDailyResponse(num)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<QDailyBean, List<FeedsBean>>() {
                     @Override
                     public List<FeedsBean> call(QDailyBean dailyBean) {
-
+                        handleBanner(dailyBean);
                         return transformColumns2Feed(dailyBean);
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread())
+
                 .subscribe(new Action1<List<FeedsBean>>() {
                     @Override
                     public void call(List<FeedsBean> feedsBeen) {
@@ -51,6 +54,21 @@ public class QDailyPresenter implements BasePresenter<QDailyBaseView> {
 
     }
 
+    private void handleBanner(QDailyBean dailyBean) {
+        List<BannersBean> banners = dailyBean.getResponse().getBanners();
+        List<String> images = new ArrayList<>(banners.size());
+        List<String> titles = new ArrayList<>(banners.size());
+        List<String> appviews = new ArrayList<>(banners.size());
+
+        for (int i = 0;i<banners.size();i++){
+            images.add(banners.get(i).getImage());
+            titles.add(banners.get(i).getPost().getTitle());
+            appviews.add(banners.get(i).getPost().getAppview());
+        }
+
+        mView.setBanner(images,titles,appviews);
+
+    }
 
 
     private List<FeedsBean> transformColumns2Feed(QDailyBean dailyBean){

@@ -36,6 +36,9 @@ public class QdailyFragment extends Fragment implements QDailyBaseView {
     private RecyclerView mRecycler;
     private Banner mBanner;
     private QDailyAdapter mQDailyAdapter;
+    private List<String> appviews;
+    private View mBannerContainer;
+
 
     @Nullable
     @Override
@@ -78,7 +81,7 @@ public class QdailyFragment extends Fragment implements QDailyBaseView {
     }
 
     @Override
-    public void setBanner(List<String> images, List<String> titles){
+    public void setBanner(List<String> images, List<String> titles, List<String> appviews){
         if(mBanner != null){
             mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
             //设置图片加载器
@@ -97,6 +100,11 @@ public class QdailyFragment extends Fragment implements QDailyBaseView {
             mBanner.setIndicatorGravity(BannerConfig.RIGHT);
             //banner设置方法全部调用完毕时最后调用
             mBanner.start();
+
+            //注意，这里一定要传mbannercontainer
+            mQDailyAdapter.setHeaderView(mBannerContainer);
+            this.appviews = appviews;
+
         }
     }
 
@@ -113,8 +121,8 @@ public class QdailyFragment extends Fragment implements QDailyBaseView {
     }
 
     private void initBanner(View view){
-        View bannerContainer = LayoutInflater.from(view.getContext()).inflate(R.layout.banner_qdaily,null);
-        mBanner = (Banner) bannerContainer.findViewById(R.id.banner);
+        mBannerContainer = LayoutInflater.from(view.getContext()).inflate(R.layout.banner_qdaily,null);
+        mBanner = (Banner) mBannerContainer.findViewById(R.id.banner);
         mBanner.setOnBannerListener(new QDailyBannerListenter());
     }
 
